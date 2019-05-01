@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/starrynight"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        tools:context=".HelpActivity">
+
+
+    <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:srcCompat="@mipmap/back"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:id="@+id/imageButton_back"/>
+    <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/nicotine_anonymous"
+            android:scaleType="fitXY"
+            android:id="@+id/imageButton_nanonymous"/>
+    <TextView
+            android:text="@string/nica"
+            android:justificationMode="inter_word"
+            android:textSize="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFFFFF"
+            android:id="@+id/textView"/>
+    <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/aap_logo"
+            android:id="@+id/imageButton_aap"/>
+    <TextView
+            android:text="@string/aap"
+            android:layout_width="match_parent"
+            android:textColor="#FFFFFF"
+            android:justificationMode="inter_word"
+            android:textSize="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"/>
+</LinearLayout>

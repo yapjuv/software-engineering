@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:background="@drawable/starrynight"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        tools:context=".TrackActivity">
+
+
+
+
+    <TextView
+            android:text="Date and Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="30dp"
+            android:textColor="#FFFFFF"
+            android:textAlignment="center"
+            android:id="@+id/textView_date"/>
+
+    <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:text="@string/cigarettes"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                android:layout_marginLeft="70dp"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/textViewcig"/>
+        <TextView
+                android:text="0"
+                android:layout_marginRight="100dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_cigcount"
+                android:layout_weight="0"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:text="@string/cigarette_cost_php"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:layout_marginLeft="60dp"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/textViewcigcost" android:layout_marginRight="20dp"/>
+        <TextView
+                android:text="0"
+                android:layout_marginRight="100dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_cigcost"
+                android:layout_weight="0"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:text="@string/alcohol"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp"
+                android:layout_marginLeft="70dp"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/textViewalc"/>
+        <TextView
+                android:text="0"
+                android:layout_marginRight="100dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="30dp"
+                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_beercount"
+                android:layout_weight="0"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:text="@string/alcohol_cost_php"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:layout_marginLeft="60dp"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/textViewalccost" android:layout_marginRight="20dp"/>
+        <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:textColor="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_beercost"
+                android:layout_weight="0" android:layout_marginRight="100dp"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+    <ImageButton
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="40dp"
+
+            app:srcCompat="@drawable/smoking1"
+            android:id="@+id/imageButton_smoking"/>
+
+    <ImageButton
+            android:layout_marginTop="50dp"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:scaleType="fitXY"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="85dp"
+            app:srcCompat="@drawable/livercrossfit"
+            android:layout_weight="0"
+            android:background="@null"
+            android:id="@+id/imageButton_drinking"/>
+    </LinearLayout>
+    <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/textView_previousdate"/>
+
+
+</LinearLayout>
+
