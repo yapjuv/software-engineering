@@ -16,12 +16,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String COL_1 ="ID";
     public static final String COL_2 ="username";
     public static final String COL_3 ="password";
-    public static final String column1 = "day";
+    public static final String column1 = "log";
     public static final String column2 = "datevice";
     public static final String column3 = "cig";
     public static final String column4 = "cigcost";
     public static final String column5 = "beer";
     public static final String column6 = "beercost";
+    public static final String column7 = "registeruser_ID";
 
 
 
@@ -32,8 +33,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE registeruser (ID INTEGER PRIMARY  KEY AUTOINCREMENT, username TEXT, password TEXT)");
-        sqLiteDatabase.execSQL("CREATE TABLE userstat (day INTEGER PRIMARY KEY AUTOINCREMENT, datevice VARCHAR, cig VARCHAR,cigcost VARCHAR, beer VARCHAR, beercost VARCHAR,registeruser_ID INTEGER, FOREIGN KEY(registeruser_ID) REFERENCES registeruser(ID) )");
+        sqLiteDatabase.execSQL("CREATE TABLE registeruser (ID INTEGER PRIMARY  KEY AUTOINCREMENT, username TEXT UNIQUE, password TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE userstat (log INTEGER PRIMARY KEY AUTOINCREMENT, datevice VARCHAR, cig VARCHAR,cigcost VARCHAR, beer VARCHAR, beercost VARCHAR,registeruser_ID INTEGER, FOREIGN KEY(registeruser_ID) REFERENCES registeruser(ID) )");
     }
 
     @Override
@@ -69,7 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             return  false;
     }
 
-    public boolean insertData(String datevice, String cig, String cigcost,String beer, String beercost){
+    public long insertData(String datevice, String cig, String cigcost, String beer, String beercost){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -78,11 +79,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         contentValues.put(column4,cigcost);
         contentValues.put(column5,beer);
         contentValues.put(column6,beercost);
-        long result = db.insert(TABLE_STAT, null,contentValues);
-        if (result == -1)
-            return false;
-        else
-            return true;
+        long result = db.insert("userstat", null,contentValues);
+        db.close();
+        return result;
 
     }
 }

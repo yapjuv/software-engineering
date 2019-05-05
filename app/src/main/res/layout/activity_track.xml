@@ -178,12 +178,24 @@
             android:background="@null"
             android:id="@+id/imageButton_drinking"/>
     </LinearLayout>
-    <TextView
-            android:text="TextView"
+
+    <Button
+            android:text="@string/save_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:id="@+id/textView_previousdate"/>
+            android:background="@null"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:id="@+id/button_saveData"/>
+        <Button
+                android:text="RESET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
+                android:id="@+id/button_reset"/>
+
 
 
 </LinearLayout>

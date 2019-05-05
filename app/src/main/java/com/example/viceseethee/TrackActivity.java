@@ -1,13 +1,16 @@
 package com.example.viceseethee;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.text.DateFormat;
@@ -22,9 +25,10 @@ public class TrackActivity extends AppCompatActivity {
     TextView cigmoney;
     TextView beerconsume;
     TextView beermoney;
-    TextView previousDate = (TextView)findViewById(R.id.textView_previousdate);
     ImageButton cigplus;
     ImageButton beerplus;
+    Button savebtn;
+    Button resetbtn;
     int countercig;
     int counterbeer;
     int countercigcost;
@@ -55,97 +59,9 @@ public class TrackActivity extends AppCompatActivity {
         beermoney = (TextView)findViewById(R.id.textView_beercost);
         cigplus = (ImageButton)findViewById(R.id.imageButton_smoking);
         beerplus = (ImageButton)findViewById(R.id.imageButton_drinking);
+        savebtn = (Button)findViewById(R.id.button_saveData);
+        resetbtn = (Button)findViewById(R.id.button_reset);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        String prevDate = sharedPreferences.getString("date", null);
-        if (prevDate == null) {
-
-        }
-        else {
-            if (currentDate.equals(prevDate)) {
-                //SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-                int yosicounter = sharedPreferences.getInt("yosicounter", 0);
-                int yosicost = sharedPreferences.getInt("yosicost", 0);
-                int inomcounter = sharedPreferences.getInt("inomcounter", 0);
-                int inomcost = sharedPreferences.getInt("inomcost", 0);
-
-                if (yosicounter == 0 && yosicost == 0 && inomcost == 0 && inomcounter == 0) {
-                    countercig = 0;
-                    countercigcost = 0;
-                    counterbeer = 0;
-                    counterbeercost = 0;
-                    cigconsume.setText(Integer.toString(0));
-                    cigmoney.setText(Integer.toString(0));
-                    beerconsume.setText(Integer.toString(0));
-                    beermoney.setText(Integer.toString(0));
-                } else {
-                    countercig = sharedPreferences.getInt("yosicounter", yosicounter);
-                    countercigcost = sharedPreferences.getInt("yosicost", yosicost);
-                    counterbeer = sharedPreferences.getInt("inomcounter", inomcounter);
-                    counterbeercost = sharedPreferences.getInt("inomcost", inomcost);
-                    cigconsume.setText(Integer.toString(countercig));
-                    cigmoney.setText(Integer.toString(countercigcost));
-                    beerconsume.setText(Integer.toString(counterbeer));
-                    beermoney.setText(Integer.toString(counterbeercost));
-                }
-                // String counteryosi = cigconsume.getText().toString().trim();
-                // String counteryosicost = cigmoney.getText().toString().trim();
-                // String counterinom = beerconsume.getText().toString().trim();
-                // String counterinomcost = beermoney.getText().toString().trim();
-                // final boolean b = db.insertData(previousDate, counteryosi, counteryosicost, counterinom, counterinomcost);
-
-                // countercig=0;
-                // countercigcost=0;
-                // counterbeer=0;
-                // counterbeercost=0;
-                // cigconsume.setText(Integer.toString(0));
-                // cigmoney.setText(Integer.toString(0));
-                // beerconsume.setText(Integer.toString(0));
-                // beermoney.setText(Integer.toString(0));
-
-
-
-
-
-            } else {
-                //SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-                int yosicounter = sharedPreferences.getInt("yosicounter", 0);
-                int yosicost = sharedPreferences.getInt("yosicost", 0);
-                int inomcounter = sharedPreferences.getInt("inomcounter", 0);
-                int inomcost = sharedPreferences.getInt("inomcost", 0);
-
-                if (yosicounter == 0 && yosicost == 0 && inomcost == 0 && inomcounter == 0) {
-                    countercig = 0;
-                    countercigcost = 0;
-                    counterbeer = 0;
-                    counterbeercost = 0;
-                    cigconsume.setText(Integer.toString(0));
-                    cigmoney.setText(Integer.toString(0));
-                    beerconsume.setText(Integer.toString(0));
-                    beermoney.setText(Integer.toString(0));
-                } else {
-                    countercig = sharedPreferences.getInt("yosicounter", yosicounter);
-                    countercigcost = sharedPreferences.getInt("yosicost", yosicost);
-                    counterbeer = sharedPreferences.getInt("inomcounter", inomcounter);
-                    counterbeercost = sharedPreferences.getInt("inomcost", inomcost);
-                    cigconsume.setText(Integer.toString(countercig));
-                    cigmoney.setText(Integer.toString(countercigcost));
-                    beerconsume.setText(Integer.toString(counterbeer));
-                    beermoney.setText(Integer.toString(counterbeercost));
-                }
-
-                //countercig=0;
-                //countercigcost=0;
-                //counterbeer=0;
-                //counterbeercost=0;
-                //cigconsume.setText(Integer.toString(0));
-                //cigmoney.setText(Integer.toString(0));
-                //beerconsume.setText(Integer.toString(0));
-                //beermoney.setText(Integer.toString(0));
-
-
-            }
-        }
 
         cigplus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +73,39 @@ public class TrackActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 plusbeer();
+            }
+        });
+
+        savebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String date = mdatetime.getText().toString();
+                String yosi = cigconsume.getText().toString();
+                String yosimoney = cigmoney.getText().toString();
+                String alak = beerconsume.getText().toString();
+                String alakmoney = beermoney.getText().toString();
+                long val = db.insertData(date,yosi,yosimoney,alak,alakmoney);
+                if (val>0) {
+                    Toast.makeText(TrackActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();;
+                }
+                else {
+                    Toast.makeText(TrackActivity.this, "Error", Toast.LENGTH_SHORT).show();;
+                }
+
+            }
+        });
+
+        resetbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countercig = 0;
+                countercigcost = 0;
+                counterbeer = 0;
+                counterbeercost = 0;
+                cigconsume.setText(Integer.toString(countercig));
+                cigmoney.setText(Integer.toString(countercigcost));
+                beerconsume.setText(Integer.toString(counterbeer));
+                beermoney.setText(Integer.toString(counterbeercost));
             }
         });
 
@@ -185,12 +134,9 @@ public class TrackActivity extends AppCompatActivity {
                     builder.show();
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("yosicounter", countercig);
-        editor.putInt("yosicost", countercigcost);
-        editor.putString("date", String.valueOf(mdatetime));
-        editor.commit();
+
+
+
 
 
     }
@@ -214,13 +160,6 @@ public class TrackActivity extends AppCompatActivity {
                     builder3.setMessage("You already drank a case. Please don't drink and drive!");
                     builder3.show();
         }
-
-        SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("inomcounter", counterbeer);
-        editor.putInt("inomcost", counterbeercost);
-        editor.putString("date", String.valueOf(mdatetime));
-        editor.commit();
 
     }
 
