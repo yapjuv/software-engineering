@@ -1,66 +1,148 @@
 package com.example.viceseethee;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+/**
+ * Created by amardeep on 10/26/2017.
+ */
 
 public class RegisterActivity extends AppCompatActivity {
-    DatabaseHelper db;
-    EditText mTextUsername;
-    EditText mTextPassword;
-    EditText mTextCnfPassword;
-    Button mButtonRegister;
-    TextView mTextViewLogin;
+
+    //Declaration EditTexts
+    EditText editTextUserName;
+    EditText editTextEmail;
+    EditText editTextPassword;
+
+    //Declaration TextInputLayout
+    TextInputLayout textInputLayoutUserName;
+    TextInputLayout textInputLayoutEmail;
+    TextInputLayout textInputLayoutPassword;
+
+    //Declaration Button
+    Button buttonRegister;
+
+    //Declaration SqliteHelper
+    DatabaseHelper sqliteHelper;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        db = new DatabaseHelper(this);
-        mTextUsername = (EditText)findViewById(R.id.edittext_username);
-        mTextPassword = (EditText)findViewById(R.id.edittext_password);
-        mTextCnfPassword = (EditText)findViewById(R.id.edittext_cnf_password);
-        mButtonRegister = (Button)findViewById(R.id.button_register);
-        mTextViewLogin = (TextView)findViewById(R.id.textview_login);
-        mTextViewLogin.setOnClickListener(new View.OnClickListener() {
+        sqliteHelper = new DatabaseHelper(this);
+        initTextViewLogin();
+        initViews();
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent LoginIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(LoginIntent);
+                if (validate()) {
+                    String UserName = editTextUserName.getText().toString();
+                    String Email = editTextEmail.getText().toString();
+                    String Password = editTextPassword.getText().toString();
+
+                    //Check in the database is there any user associated with  this email
+                    if (!sqliteHelper.isEmailExists(Email)) {
+
+                        //Email does not exist now add new user to database
+                        sqliteHelper.addUser(new User(null ,UserName, Email, Password));
+                        Snackbar.make(buttonRegister, "User created successfully! Please Login ", Snackbar.LENGTH_LONG).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, Snackbar.LENGTH_LONG);
+                    }else {
+
+                        //Email exists with email input provided so show error user already exist
+                        Snackbar.make(buttonRegister, "User already exists with same email ", Snackbar.LENGTH_LONG).show();
+                    }
+
+
+                }
+            }
+        });
+    }
+
+    //this method used to set Login TextView click event
+    private void initTextViewLogin() {
+        TextView textViewLogin = (TextView) findViewById(R.id.textViewLogin);
+        textViewLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });
+    }
 
-        mButtonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user = mTextUsername.getText().toString().trim();
-                String pwd = mTextPassword.getText().toString().trim();
-                String cnf_pwd = mTextCnfPassword.getText().toString().trim();
+    //this method is used to connect XML views to its Objects
+    private void initViews() {
+        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextUserName = (EditText) findViewById(R.id.editTextUserName);
+        textInputLayoutEmail = (TextInputLayout) findViewById(R.id.textInputLayoutEmail);
+        textInputLayoutPassword = (TextInputLayout) findViewById(R.id.textInputLayoutPassword);
+        textInputLayoutUserName = (TextInputLayout) findViewById(R.id.textInputLayoutUserName);
+        buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
-                if(pwd.equals(cnf_pwd)){
-                    long val = db.addUser(user,pwd);
-                    if(val > 0){
-                        Toast.makeText(RegisterActivity.this,"You have registered",Toast.LENGTH_SHORT).show();
-                        Intent moveToLogin = new Intent(RegisterActivity.this,MainActivity.class);
-                        startActivity(moveToLogin);
-                        finish();
-                    }
-                    else{
-                        Toast.makeText(RegisterActivity.this,"Registeration Error",Toast.LENGTH_SHORT).show();
-                    }
+    }
 
-                }
-                else{
-                    Toast.makeText(RegisterActivity.this,"Password is not matching",Toast.LENGTH_SHORT).show();
-                }
+    //This method is used to validate input given by user
+    public boolean validate() {
+        boolean valid = false;
+
+        //Get values from EditText fields
+        String UserName = editTextUserName.getText().toString();
+        String Email = editTextEmail.getText().toString();
+        String Password = editTextPassword.getText().toString();
+
+        //Handling validation for UserName field
+        if (UserName.isEmpty()) {
+            valid = false;
+            textInputLayoutUserName.setError("Please enter valid username!");
+        } else {
+            if (UserName.length() > 5) {
+                valid = true;
+                textInputLayoutUserName.setError(null);
+            } else {
+                valid = false;
+                textInputLayoutUserName.setError("Username is to short!");
             }
-        });
+        }
+
+        //Handling validation for Email field
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
+            valid = false;
+            textInputLayoutEmail.setError("Please enter valid email!");
+        } else {
+            valid = true;
+            textInputLayoutEmail.setError(null);
+        }
+
+        //Handling validation for Password field
+        if (Password.isEmpty()) {
+            valid = false;
+            textInputLayoutPassword.setError("Please enter valid password!");
+        } else {
+            if (Password.length() > 5) {
+                valid = true;
+                textInputLayoutPassword.setError(null);
+            } else {
+                valid = false;
+                textInputLayoutPassword.setError("Password is to short!");
+            }
+        }
+
+
+        return valid;
     }
 }

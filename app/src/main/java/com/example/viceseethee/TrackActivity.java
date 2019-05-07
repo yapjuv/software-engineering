@@ -84,13 +84,10 @@ public class TrackActivity extends AppCompatActivity {
                 String yosimoney = cigmoney.getText().toString();
                 String alak = beerconsume.getText().toString();
                 String alakmoney = beermoney.getText().toString();
-                long val = db.insertData(date,yosi,yosimoney,alak,alakmoney);
-                if (val>0) {
-                    Toast.makeText(TrackActivity.this, "Data Saved", Toast.LENGTH_SHORT).show();;
-                }
-                else {
-                    Toast.makeText(TrackActivity.this, "Error", Toast.LENGTH_SHORT).show();;
-                }
+
+                db.insertData(new Data(date, yosi, yosimoney, alak, alakmoney));
+                Toast.makeText(TrackActivity.this,"Data Inserted", Toast.LENGTH_SHORT).show();
+
 
             }
         });

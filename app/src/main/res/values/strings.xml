@@ -18,4 +18,7 @@
     <string name="cigarette_cost_php">Cigarette cost: Php</string>
     <string name="alcohol_cost_php">Alcohol cost: Php</string>
     <string name="save_data">Save Data</string>
+    <string name="back_to_log_in">Back to Log in</string>
+    <string name="e_mail">E-mail</string>
+    <string name="donthaveone">I don\'t have an account yet. Creat one.</string>
 </resources>
