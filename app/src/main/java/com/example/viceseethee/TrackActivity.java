@@ -19,7 +19,7 @@ import java.util.Calendar;
 
 public class TrackActivity extends AppCompatActivity {
 
-    DatabaseHelper db;
+    DatabaseHelper sqliteHelper;
     TextView mdatetime;
     TextView cigconsume;
     TextView cigmoney;
@@ -85,7 +85,8 @@ public class TrackActivity extends AppCompatActivity {
                 String alak = beerconsume.getText().toString();
                 String alakmoney = beermoney.getText().toString();
 
-                db.insertData(new Data(date, yosi, yosimoney, alak, alakmoney));
+
+                sqliteHelper.insertData(new Data(date, yosi, yosimoney, alak, alakmoney, null));
                 Toast.makeText(TrackActivity.this,"Data Inserted", Toast.LENGTH_SHORT).show();
 
 

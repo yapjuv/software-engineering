@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //COLUMN beer cost
     public static final String BEERCOST = "beercost";
 
-  //  public static final String USER_ID = "user_id";
+    public static final String USER_ID = "user_id";
 
     //SQL for creating users table
     public static final String SQL_TABLE_USERS = " CREATE TABLE " + TABLE_USERS
@@ -73,8 +73,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + CIG + " TEXT, "
             + CIGCOST + " TEXT, "
             + BEER + " TEXT, "
-            + BEERCOST + " TEXT "
-           // + USER_ID + " INTEGER, FOREIGN KEY(USER_ID) REFERENCES TABLE_USERS(KEY_ID)"
+            + BEERCOST + " TEXT, "
+            + USER_ID + " INTEGER, FOREIGN KEY(USER_ID) REFERENCES TABLE_USERS(KEY_ID)"
             + " ) ";
 
 
@@ -128,7 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CIGCOST, data.cigcost);
         contentValues.put(BEER, data.beer);
         contentValues.put(BEERCOST, data.beercost);
-      //  contentValues.put(USER_ID, user.id);
+        contentValues.put(USER_ID, data.user_id);
         long result = db.insert(TABLE_DATA, null, contentValues);
         if ( result == -1) {
             return false;
@@ -159,6 +159,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //if user password does not matches or there is no record with that email then return @false
         return null;
     }
+
+
 
     public boolean isEmailExists(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
